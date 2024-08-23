@@ -26,7 +26,7 @@ const LoginForm: React.FC = () => {
       localStorage.setItem('id', data.username);
       
      
-      navigate('/dashboard');
+      navigate('/');
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 401) {

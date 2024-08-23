@@ -21,7 +21,7 @@ const NavBar =  () => {
                         <Link to="/Keys" className="nav-link">LLaves</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/DigitalSign" className="nav-link">Firma Digital</Link>
+                        <Link to="/SignPage" className="nav-link">Firma Digital</Link>
                     </li>
 
                     <li className="nav-item">

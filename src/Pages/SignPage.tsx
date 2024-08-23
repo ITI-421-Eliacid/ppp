@@ -1,17 +1,14 @@
-import {Link} from 'react-router-dom';
+import React from 'react';
+import SignaturePage from '../components/SignaturePage';
 
-function SignInvoicePage() {
-    return (
-    <div className="container">
-        <div>
-            <ul>
-                <li className="nav-item btn btn-primary">
-                    <Link to="/GenerateKeysPage" className="nav-link">GenerateKeysPage</Link>
-                </li>
-            </ul>
-        </div>
+const SignPage = () => {
+  return (
+    <div className="login-body-container">
+      <div className="login-container">
+        <SignaturePage />
+      </div>
     </div>
-    );
-}
+  );
+};
 
-export default SignInvoicePage;
+export default SignPage;
