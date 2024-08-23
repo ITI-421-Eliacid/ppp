@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import apiUrl from '../apiUrl';
+
 
 
 const RegisterForm: React.FC = () => {
@@ -19,7 +21,7 @@ const RegisterForm: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`http://localhost:5001/bank/register`, {
+      const response = await axios.post(`${apiUrl}/bank/register`, {
         username,
         password,
         idNumber,

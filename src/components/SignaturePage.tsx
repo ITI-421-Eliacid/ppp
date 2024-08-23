@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import apiUrl from '../apiUrl';
+import '../styles/login.css';
 
 const UserSignature: React.FC = () => {
   const [signature, setSignature] = useState<string | null>(null);
@@ -14,7 +16,7 @@ const UserSignature: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:5001/bank/download-signature?idNumber=${idNumber}&idType=${idType}`
+          `${apiUrl}/bank/download-signature?idNumber=${idNumber}&idType=${idType}`
         );
         setSignature(response.data);
       } catch (err) {
@@ -31,7 +33,7 @@ const UserSignature: React.FC = () => {
   const renewSignature = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:5001/bank/renew-signature', {
+      const response = await axios.post(`${apiUrl}/bank/renew-signature`, {
         idNumber,
         idType,
       });
@@ -49,7 +51,7 @@ const UserSignature: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5001/bank/download-signature?idNumber=${idNumber}&idType=${idType}`,
+        `${apiUrl}/bank/download-signature?idNumber=${idNumber}&idType=${idType}`,
         { responseType: 'blob' }
       );
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -69,7 +71,7 @@ const UserSignature: React.FC = () => {
   const createSignature = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:5001/bank/generate-signature', {
+      const response = await axios.post(`${apiUrl}/bank/generate-signature`, {
         idNumber,
         idType,
       });
@@ -85,26 +87,27 @@ const UserSignature: React.FC = () => {
 
   return (
     <div className="signature-container">
-      <h1>Digital Signature</h1>
+      <h1>Firma Digital</h1>
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
           {signature ? (
             <>
-              <p>Your current signature: {signature}</p>
+              <p>Su firma actual  :   
+              {signature}</p>
               <button onClick={renewSignature} disabled={loading}>
-                Renew Signature
+                Renovar Firma
               </button>
               <button onClick={downloadSignature} disabled={loading}>
-                Download Signature
+                Descargar Firma
               </button>
             </>
           ) : (
             <>
               <p>{error}</p>
               <button onClick={createSignature} disabled={loading}>
-                Create Signature
+                Crear Firma
               </button>
             </>
           )}
