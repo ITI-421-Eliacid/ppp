@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import apiUrl from '../apiUrl';
 
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState({
@@ -21,7 +22,7 @@ const UserProfile: React.FC = () => {
 
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:5001/bank/users/${userId}`);
+        const response = await axios.get(`${apiUrl}/bank/users/${userId}`);
         setUser(response.data);
 
         // Guardar los datos en localStorage
@@ -56,7 +57,7 @@ const UserProfile: React.FC = () => {
     }
 
     try {
-      const response = await axios.put(`http://localhost:5001/bank/users/${userId}`, user);
+      const response = await axios.put(`${apiUrl}/bank/users/${userId}`, user);
       setUser(response.data);
       
       // Guardar los datos actualizados en localStorage
