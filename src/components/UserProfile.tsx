@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-interface UserProfileProps {
-  userId: string;
-}
-
-const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
+const UserProfile: React.FC = () => {
   const [user, setUser] = useState({
     username: '',
     idNumber: '',
@@ -15,13 +11,25 @@ const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
 
   useEffect(() => {
+    const userId = localStorage.getItem('id');
+    if (!userId) {
+      setError('User ID not found in localStorage');
+      return;
+    }
+
     const fetchUser = async () => {
       try {
         const response = await axios.get(`http://localhost:5001/bank/users/${userId}`);
         setUser(response.data);
+
+        // Guardar los datos en localStorage
+        localStorage.setItem('username', response.data.username);
+        localStorage.setItem('idNumber', response.data.idNumber);
+        localStorage.setItem('idType', response.data.idType);
+        localStorage.setItem('phoneNumber', response.data.phoneNumber);
+        localStorage.setItem('address', response.data.address);
       } catch (err) {
         setError('Error fetching user data');
         console.error(err);
@@ -29,7 +37,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
     };
 
     fetchUser();
-  }, [userId]);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -41,8 +49,23 @@ const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
     setLoading(true);
     setError(null);
 
+    const userId = localStorage.getItem('id');
+    if (!userId) {
+      setError('User ID not found in localStorage');
+      return;
+    }
+
     try {
-      await axios.put(`http://localhost:5001/bank/users/${userId}`, user);
+      const response = await axios.put(`http://localhost:5001/bank/users/${userId}`, user);
+      setUser(response.data);
+      
+      // Guardar los datos actualizados en localStorage
+      localStorage.setItem('username', response.data.username);
+      localStorage.setItem('idNumber', response.data.idNumber);
+      localStorage.setItem('idType', response.data.idType);
+      localStorage.setItem('phoneNumber', response.data.phoneNumber);
+      localStorage.setItem('address', response.data.address);
+
       alert('Perfil actualizado con éxito');
     } catch (err) {
       setError('Error updating profile');
@@ -139,6 +162,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
           </div>
         </div>
       </form>
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };

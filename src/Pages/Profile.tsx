@@ -10,7 +10,7 @@ const ProfilePage: React.FC = () => {
 
   return (
     <div className="profile-page">
-      <UserProfile userId={userId} />
+      <UserProfile  />
     </div>
   );
 };
