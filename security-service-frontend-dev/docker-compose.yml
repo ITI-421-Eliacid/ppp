@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  frontend:
+    build: .
+    ports:
+      - "3000:80"
+  # environment:
+  #   - VITE_API_URL=http://localhost:8000
+  #   - OTRA_VARIABLE=valor
+  # Descomenta y edita las variables de entorno cuando las necesites
+    volumes:
+      - ./public:/usr/share/nginx/html
+    entrypoint: ["/docker-entrypoint.sh"]
+
+  restart: unless-stopped
+
+# =============================
+# NOTA: Comandos útiles Docker Compose
+# Para levantar el servicio (build + run):
+#   docker-compose up --build
+# Para apagar el servicio:
+#   docker-compose down
+# =============================
